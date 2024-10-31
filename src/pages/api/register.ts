@@ -34,7 +34,8 @@ export default async function handler(
     } catch (error) {
       console.error("Signp failed", error);
       res.status(400).json({
-        error: "Signup Failed",
+        message: "Signup Failed",
+        error,
       });
     }
   } else {
