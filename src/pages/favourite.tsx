@@ -38,7 +38,7 @@ export default function Home({ session }: Props) {
   console.log(session);
   return (
     <Layout>
-      <div className="container mx-auto">Home</div>
+      <div className="container mx-auto">fav</div>
     </Layout>
   );
 }
