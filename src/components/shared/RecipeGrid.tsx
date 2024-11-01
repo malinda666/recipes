@@ -14,6 +14,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
+// import { useSession } from "next-auth/react";
 
 type Props = {
   isLoading: boolean;
@@ -40,6 +41,7 @@ type RecipeProps = {
 
 const Recipe = ({ recipe }: RecipeProps) => {
   const [open, setOpen] = useState(false);
+  // const { data: session } = useSession();
   const [detailsLoading, setDetailsLoading] = useState(true);
   const [recipeDetails, setRecipeDetails] = useState({
     strMeal: "",
