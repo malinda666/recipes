@@ -41,7 +41,6 @@ export default function Component() {
   });
 
   async function onSubmit(values: FormValues) {
-    console.log(values);
     const { email, password } = values;
     await signIn("credentials", { email, password, callbackUrl: "/" });
   }

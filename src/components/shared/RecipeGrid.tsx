@@ -59,7 +59,7 @@ const Recipe = ({ recipe }: RecipeProps) => {
     setDetailsLoading(true);
     try {
       const { data } = await axios.get(
-        `/api/recipes/single?name=${recipe.strMeal}`
+        `/api/recipes/single?id=${recipe.idMeal}`
       );
       setRecipeDetails(data[0]);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -70,6 +70,24 @@ const Recipe = ({ recipe }: RecipeProps) => {
       setDetailsLoading(false);
     }
   };
+
+  async function updateFavouriteRecipes(
+    user_id: string,
+    favouriteRecipes: string[]
+  ) {
+    try {
+      const response = await axios.put(
+        `/api/recipes/favourites?id=${user_id}`,
+        {
+          favouriteRecipes,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error updating favourite recipes:", error);
+      throw error;
+    }
+  }
   return (
     <>
       {open ? (
@@ -144,6 +162,9 @@ const Recipe = ({ recipe }: RecipeProps) => {
                 size="icon"
                 className="h-8 w-8"
                 aria-label="Add to favorites"
+                onClick={() => {
+                  updateFavouriteRecipes("", [recipe.idMeal]);
+                }}
               >
                 <Heart className="h-4 w-4" />
               </Button>

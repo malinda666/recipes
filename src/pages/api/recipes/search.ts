@@ -6,16 +6,16 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const { id } = req.query;
+    const { name } = req.query;
 
-    if (!id) {
+    if (!name) {
       res.status(404).json({
-        message: "Recipe id not found",
+        message: "Recipe name not found",
       });
     } else {
       try {
         const { data } = await axios.get(
-          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+          `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`
         );
         res.status(200).json([...data.meals]);
       } catch (error) {

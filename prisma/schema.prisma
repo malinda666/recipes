@@ -23,4 +23,5 @@ model User {
   emailVerified DateTime?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  favouriteRecipes String[]
 }
