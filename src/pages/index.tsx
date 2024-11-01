@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 import Layout from "@/components/layout";
+import AllRecipes from "@/components/views/AllRecipes";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getServerSideProps(context: any) {
@@ -29,16 +30,10 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-type Props = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  session: any;
-};
-
-export default function Home({ session }: Props) {
-  console.log(session);
+export default function Home() {
   return (
     <Layout>
-      <div className="container mx-auto">Home</div>
+      <AllRecipes />
     </Layout>
   );
 }

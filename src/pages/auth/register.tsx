@@ -55,7 +55,7 @@ const Register = () => {
     console.log(values);
 
     try {
-      await axios.post("/api/register", values);
+      await axios.post("/api/auth/register", values);
       // Redirect to login or dashboard after successful registration
     } catch (error) {
       console.error("Registration failed", error);
