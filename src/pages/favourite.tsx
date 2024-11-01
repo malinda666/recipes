@@ -29,13 +29,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-type Props = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  session: any;
-};
-
-export default function Home({ session }: Props) {
-  console.log(session);
+export default function Home() {
   return (
     <Layout>
       <div className="container mx-auto">fav</div>

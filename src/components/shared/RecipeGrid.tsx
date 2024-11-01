@@ -61,7 +61,6 @@ const Recipe = ({ recipe }: RecipeProps) => {
       const { data } = await axios.get(
         `/api/recipes/single?name=${recipe.strMeal}`
       );
-      console.log(data[0]);
       setRecipeDetails(data[0]);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
