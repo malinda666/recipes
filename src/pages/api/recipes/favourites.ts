@@ -32,12 +32,12 @@ export default async function handler(
     }
 
     try {
-      const user = await prisma.user.update({
+      await prisma.user.update({
         where: { id: String(id) },
         data: { favouriteRecipes },
       });
 
-      res.status(200).json(user);
+      res.status(200).json({ message: "Favourites updated" });
     } catch (error) {
       res
         .status(500)
