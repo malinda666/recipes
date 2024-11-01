@@ -48,8 +48,13 @@ export default function Favourites({ session }: Props) {
     setLoading(true);
     try {
       const { data } = await axios.get(`/api/recipes/favourites?id=${user_id}`);
-      setRecipes(data);
-      console.log(data);
+      const favs = await Promise.all(
+        data.map((id: string) =>
+          axios.get(`/api/recipes/single?id=${id}`).then((res) => res.data)
+        )
+      );
+
+      setRecipes(favs.flat());
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(error.response.data.message);
@@ -61,6 +66,8 @@ export default function Favourites({ session }: Props) {
 
   useEffect(() => {
     getFavouriteRecipes(session.user.id);
+
+    localStorage.setItem("id", session.user.id);
   }, [session]);
 
   return (

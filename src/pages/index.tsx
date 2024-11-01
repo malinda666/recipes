@@ -34,7 +34,12 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-export default function Home() {
+type Props = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  session: any;
+};
+
+export default function Home({ session }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [recipes, setRecipes] = useState<any[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -83,6 +88,9 @@ export default function Home() {
     console.log(activeCategory);
   }, [activeCategory]);
 
+  useEffect(() => {
+    localStorage.setItem("id", session.user.id);
+  }, [session]);
   return (
     <Layout>
       <div className="my-6">

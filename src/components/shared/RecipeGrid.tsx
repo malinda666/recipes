@@ -14,6 +14,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
+import { useRouter } from "next/router";
 // import { useSession } from "next-auth/react";
 
 type Props = {
@@ -41,6 +42,10 @@ type RecipeProps = {
 
 const Recipe = ({ recipe }: RecipeProps) => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  const isHome = router.pathname === "/";
+
   // const { data: session } = useSession();
   const [detailsLoading, setDetailsLoading] = useState(true);
   const [recipeDetails, setRecipeDetails] = useState({
@@ -73,21 +78,15 @@ const Recipe = ({ recipe }: RecipeProps) => {
     }
   };
 
-  async function updateFavouriteRecipes(
-    user_id: string,
-    favouriteRecipes: string[]
-  ) {
+  async function updateFavouriteRecipes(favouriteRecipes: string[]) {
     try {
-      const response = await axios.put(
-        `/api/recipes/favourites?id=${user_id}`,
-        {
-          favouriteRecipes,
-        }
-      );
+      const id = localStorage.getItem("id");
+      const response = await axios.put(`/api/recipes/favourites?id=${id}`, {
+        favouriteRecipes,
+      });
       return response.data;
     } catch (error) {
       console.error("Error updating favourite recipes:", error);
-      throw error;
     }
   }
   return (
@@ -150,7 +149,7 @@ const Recipe = ({ recipe }: RecipeProps) => {
           <div className="aspect-square relative overflow-hidden">
             <Image
               src={recipe.strMealThumb}
-              alt="Chicken Noodle Soup"
+              alt={recipe.strMeal}
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-150 ease-in-out"
               loading="lazy"
@@ -159,17 +158,19 @@ const Recipe = ({ recipe }: RecipeProps) => {
           <div className="p-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-muted-foreground">Soups</span>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8"
-                aria-label="Add to favorites"
-                onClick={() => {
-                  updateFavouriteRecipes("", [recipe.idMeal]);
-                }}
-              >
-                <Heart className="h-4 w-4" />
-              </Button>
+              {isHome ? (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8"
+                  aria-label="Add to favorites"
+                  onClick={() => {
+                    updateFavouriteRecipes([recipe.idMeal]);
+                  }}
+                >
+                  <Heart className="h-4 w-4" />
+                </Button>
+              ) : null}
             </div>
             <h3 className="font-medium text-nowrap truncate mb-4">
               {recipe.strMeal}
